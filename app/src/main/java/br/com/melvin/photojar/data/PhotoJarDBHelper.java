@@ -6,9 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by DB on 30/06/2016.
+ *
+ * It seems a good practice to keep just one OpenHelper open
+ * for the entire app, so I applied the Singleton pattern here.
  */
 public class PhotoJarDBHelper extends SQLiteOpenHelper {
 
+    private static PhotoJarDBHelper instance;
+
+    public static synchronized PhotoJarDBHelper getInstance(Context context) {
+        if (instance == null)
+            instance = new PhotoJarDBHelper(context);
+        return instance;
+    }
 
     private static final String DATABASE_NAME = "photojar.db";
     private static final int DATABASE_VERSION = 1;
@@ -29,7 +39,7 @@ public class PhotoJarDBHelper extends SQLiteOpenHelper {
                     "photo_id INTEGER PRIMARY KEY," +
                     "tag_name TEXT PRIMARY KEY)";
 
-    public PhotoJarDBHelper(Context context) {
+    private PhotoJarDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
