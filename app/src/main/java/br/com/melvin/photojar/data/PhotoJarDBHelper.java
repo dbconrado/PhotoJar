@@ -14,7 +14,7 @@ public class PhotoJarDBHelper extends SQLiteOpenHelper {
 
     private static PhotoJarDBHelper instance;
 
-    public static synchronized PhotoJarDBHelper getInstance(Context context) {
+    public static synchronized PhotoJarDBHelper getHelper(Context context) {
         if (instance == null)
             instance = new PhotoJarDBHelper(context);
         return instance;
